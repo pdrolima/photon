@@ -18,7 +18,32 @@ model Order {
     currency String
     ip_address String?
     cancel_reason String?
+    transactions Transaction[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     canceledAt DateTime?
+
+    @@map("orders")
+}
+
+model Transaction {
+    id Int @id @default(autoincrement())
+    order_id Int
+    order Order @relation(fields: [order_id], references: [id])
+    amount Int
+    gateway String
+    status TransactionStatus?
+    source String
+    currency String @db.VarChar(3)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("transactions")
+}
+
+enum TransactionStatus {
+    Pending
+    Failure
+    Success
+    Error
 }

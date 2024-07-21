@@ -1,4 +1,3 @@
-// Get data
 import { prisma } from "@repo/database";
 
 const getOrders = async () => {
